@@ -15,6 +15,17 @@ export default function App() {
   const [date, setDate] = useState("01/23");
   const [cvc, setCvc] = useState("");
 
+  const handleCardNumberChange = (e) => {
+
+    const inputNumber = e.target.value.replace(/\D/g, '');
+
+    const formattedNumber = inputNumber
+      .replace(/(\d{4})/g, '$1 ')
+      .trim();
+
+    setCardNumber(formattedNumber);
+  };
+
   const handleCvcChange = (e) => {
     const inputValue = e.target.value;
     const limitedInput = inputValue.slice(0, 3);
@@ -32,8 +43,8 @@ export default function App() {
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 max-w-7xl mx-auto">
           <div className="mt-10 mx-5 grid grid-cols-1">
-          <article className="front-card p-5 flex flex-col justify-between absolute top-48 h-60 w-80 bg-center bg-cover bg-no-repeat rounded-xl z-20" 
-          style={{ backgroundImage: `url(${bgCardFront})` }}>
+            <article className="front-card p-5 flex flex-col justify-between absolute top-48 h-60 w-80 bg-center bg-cover bg-no-repeat rounded-xl z-20"
+              style={{ backgroundImage: `url(${bgCardFront})` }}>
               <img src={logo} alt="" className="w-20 lg:w-28" />
 
               <div>
@@ -53,7 +64,7 @@ export default function App() {
             </article>
 
             <article className="back-card absolute right-5 h-60 w-80 rounded-xl lg:ml-20 bg-center bg-cover bg-no-repeat"
-             style={{ backgroundImage: `url(${bgCardBack})` }}>
+              style={{ backgroundImage: `url(${bgCardBack})` }}>
               <p className="absolute right-10 text-lg lg:text-xl text-white tracking-widest top-24">
                 {cvc}
               </p>
@@ -85,11 +96,8 @@ export default function App() {
                     placeholder="e.g. 1234 5678 9012 3456"
                     required
                     maxLength={19}
-                    value={cardNumber
-                      .replace(/\s/g, "")
-                      .replace(/(\d{4})/g, "$1 ")
-                      .trim()}
-                    onChange={(e) => setCardNumber(e.target.value)}
+                    value={cardNumber}
+                    onChange={handleCardNumberChange}
                   />
                 </div>
 
